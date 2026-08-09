@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: p07_ecommerce_db
+    environment:
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
+      POSTGRES_DB: ecommerce
+    ports:
+      # Hôte 5433 -> conteneur 5432 : évite le conflit avec un PostgreSQL déjà installé localement.
+      - "5433:5432"
+    volumes:
+      - p07_pgdata:/var/lib/postgresql/data
+      # Le schéma se charge automatiquement au 1er démarrage du volume :
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d ecommerce"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  p07_pgdata:

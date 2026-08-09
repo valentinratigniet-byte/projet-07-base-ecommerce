@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Secrets / env
+.env
+*.json.key
+credentials*.json
+
+# Données volumineuses (on versionne le script de génération, pas les données)
+data/*.csv
+data/*.dump
