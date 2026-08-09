@@ -98,12 +98,12 @@ def main() -> None:
     execute_values(cur,
         "INSERT INTO orders (customer_id, order_date, status) VALUES %s",
         orders, page_size=1000)
-    cur.execute("SELECT id, status FROM orders")
+    cur.execute("SELECT id, status, order_date FROM orders")
     order_rows = cur.fetchall()
 
     # --- order_item + payment --------------------------------------------
     items, payments = [], []
-    for order_id, status in order_rows:
+    for order_id, status, order_date in order_rows:
         chosen = random.sample(product_ids, k=random.randint(1, MAX_ITEMS_PER_ORDER))
         total = 0
         for pid in chosen:
@@ -111,16 +111,18 @@ def main() -> None:
             unit = price_by_id[pid]
             total += qty * float(unit)
             items.append((order_id, pid, qty, unit))
-        # Une commande non annulée et non "pending" a été payée.
+        # Une commande non annulée et non "pending" a été payée,
+        # peu après la commande (sinon paid_at reste à now() et fausse les séries temporelles).
         if status not in ("pending", "cancelled"):
+            paid_at = order_date + timedelta(minutes=random.randint(1, 2880))
             payments.append((order_id, round(total, 2),
-                             random.choice(METHODS)))
+                             random.choice(METHODS), paid_at))
 
     execute_values(cur,
         "INSERT INTO order_item (order_id, product_id, quantity, unit_price) VALUES %s",
         items, page_size=1000)
     execute_values(cur,
-        "INSERT INTO payment (order_id, amount, method) VALUES %s",
+        "INSERT INTO payment (order_id, amount, method, paid_at) VALUES %s",
         payments, page_size=1000)
 
     conn.commit()
