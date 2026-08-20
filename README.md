@@ -20,9 +20,14 @@ schéma PostgreSQL en 3NF, contraint et indexé.
 
 Diagramme complet et justification de la normalisation : **[docs/mcd.md](docs/mcd.md)**.
 
-```
-customer ──< orders ──< order_item >── product >── category (auto-référencée)
-                └──< payment
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDERS : passe
+    ORDERS ||--o{ ORDER_ITEM : contient
+    ORDERS ||--o{ PAYMENT : règle
+    PRODUCT ||--o{ ORDER_ITEM : est_vendu
+    CATEGORY ||--o{ PRODUCT : classe
+    CATEGORY ||--o{ CATEGORY : sous-catégorie
 ```
 
 6 tables · clés primaires/étrangères · clé composite (`order_item`) · FK
