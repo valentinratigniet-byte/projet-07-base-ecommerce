@@ -116,5 +116,5 @@ projet-07-base-ecommerce/
 
 ---
 
-*Projet 07 du [Portfolio Data](../). Prochaine brique : Projet 08 — bibliothèque
+*Projet 07 du [Portfolio Data](https://github.com/valentinratigniet-byte). Prochaine brique : Projet 08 — bibliothèque
 SQL analytique, qui interroge cette base.*
