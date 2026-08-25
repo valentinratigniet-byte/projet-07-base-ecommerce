@@ -1,5 +1,7 @@
 # Projet 07 — Base de données e-commerce (PostgreSQL, 3NF)
 
+[![CI](https://github.com/valentinratigniet-byte/projet-07-base-ecommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/valentinratigniet-byte/projet-07-base-ecommerce/actions/workflows/ci.yml)
+
 > **Le socle du portfolio.** Concevoir une base relationnelle propre à partir d'un
 > besoin métier, la peupler avec un volume réaliste, et **prouver** — chiffres à
 > l'appui — qu'elle garantit l'intégrité des données et qu'un index bien placé
